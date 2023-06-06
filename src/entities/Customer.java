@@ -9,7 +9,9 @@ public class Customer implements Runnable {
         this.barberShop = barberShop;
     }
 
-    public Customer() { }
+    public Customer(int id) {
+        this.id = id;
+    }
 
     @Override
     public void run() {
@@ -18,9 +20,10 @@ public class Customer implements Runnable {
 
         while(true) {
             try {
-                barberShop.addCustomer(i);
+                // Simula o intervalo entre a chagada de novos clientes
+                barberShop.addCustomerOnQueue(new Customer(i));
+                Thread.sleep(rdn.nextInt(3000));
                 i++;
-                Thread.sleep(rdn.nextInt(3000));  // Simular o intervalo entre a chegada de novos clientes
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -29,9 +32,5 @@ public class Customer implements Runnable {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 }
